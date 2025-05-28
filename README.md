@@ -1,0 +1,2 @@
+- captacha verification
+- google auth login
