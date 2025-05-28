@@ -5,7 +5,6 @@ dist/
 
 # TypeScript
 *.tsbuildinfo
-example.env
 
 # Logs
 logs/
