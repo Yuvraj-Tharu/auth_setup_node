@@ -46,6 +46,13 @@ class AuthService {
     const newAccessToken = generateToken({ id, email, role }, '15m');
     return newAccessToken;
   }
+
+  // static async googleLogin(googleId: string): Promise<IUser | null> {
+  //   const user = await User.findOne({ googleId });
+  //   if (user) {
+  //     return user;
+  //   }
+  // }
 }
 
 export default AuthService;

@@ -5,6 +5,7 @@ import mongoosePaginate from 'mongoose-paginate-v2';
 import schemaMetadataPlugin from 'plugins/commonStatics';
 
 export interface IUser extends Document {
+  googleId?: string;
   name: string;
   email: string;
   password: string;
@@ -13,9 +14,10 @@ export interface IUser extends Document {
 
 const userSchema = new Schema<IUser>(
   {
+    googleId: { type: String },
     name: { type: String, required: true },
     email: { type: String, required: true, unique: true },
-    password: { type: String, required: true },
+    password: { type: String, required: false },
     role: { type: String, default: 'user' },
   },
   { timestamps: true },

@@ -7,6 +7,9 @@ import errorHandler from 'helper/error_helper';
 import routes from './routes/index';
 import { apiError } from '@utils/response';
 import mongoose from 'mongoose';
+import passport from './utils/passport_setup';
+import session from 'express-session';
+import googleAuthRoutes from '../src/user/routes/google_login_routes';
 const path = require('path');
 const router = Router();
 dotenv.config();
@@ -19,6 +22,14 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 const publicPath = path.join(__dirname, '..', 'public');
 app.use(express.static(publicPath));
+
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET || 'supersecret',
+    resave: false,
+    saveUninitialized: false,
+  }),
+);
 
 app.use(
   async (err: SyntaxError, req: Request, res: Response, next: NextFunction) => {
@@ -121,8 +132,17 @@ router.get(
     }
   },
 );
+
+app.use(passport.initialize());
+app.use(passport.session());
 app.use('', router);
 app.use('/api/v1', routes);
+app;
+app.use('/api/v1', googleAuthRoutes);
+
+app.get('/google', (req: Request, res: Response) => {
+  res.send("<a href='/api/v1/user/auth/google'>Google Login</a>");
+});
 
 app.use(async (req: Request, res: Response, next: NextFunction) => {
   const errorResponse = await apiError(

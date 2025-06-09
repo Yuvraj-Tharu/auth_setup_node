@@ -184,6 +184,31 @@ class UserController {
         .json(apiError('Failed to change password', error.message, 500));
     }
   }
+
+  // public async googleLogin(req: Request, res: Response): Promise<void> {
+  //   try {
+  //     const { token } = req.body;
+  //     if (!token) {
+  //       res.status(400).json(apiError('Google token is required', {}, 400));
+  //       return;
+  //     }
+
+  //     const user = await AuthService.googleLogin(token);
+  //     if (!user) {
+  //       res.status(401).json(apiError('Invalid Google token', {}, 401));
+  //       return;
+  //     }
+
+  //     const tokens = AuthService.generateTokens(user);
+  //     res
+  //       .status(200)
+  //       .json(success('User logged in successfully', 200, { user, ...tokens }));
+  //   } catch (error) {
+  //     res
+  //       .status(500)
+  //       .json(await apiError('Failed to login with Google', error as any, 500));
+  //   }
+  // }
 }
 
 export default new UserController();
